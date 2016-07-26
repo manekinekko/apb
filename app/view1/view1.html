@@ -1,1 +1,33 @@
-<p>This is the partial for view 1.</p>
+
+<p>
+  Selected tab: {{ ctrl1.selectedIndex }}
+</p>
+
+<polymer-tabs message="{{ ctrl1.message }}" bind-polymer-event>
+
+  <!-- content projected in polymer element -->
+  <div class="tab-1">
+
+    <p>angular events</p>
+
+    <button type="button" name="button" ng-click="ctrl1.btn1($event)">
+
+      Click {{ 'me' | uppercase }}
+
+    </button>
+  </div>
+
+  <!-- content projected in polymer element -->
+  <div class="tab-2">
+
+    <p>angular bindings</p>
+
+    <span>{{ ctrl1.model | json }}</span>
+    <div class="input-group">
+      <span class="input-group-addon" id="basic-addon1">@</span>
+      <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1" name="name" ng-model="ctrl1.model.name">
+    </div>
+
+  </div>
+
+</polymer-tabs>

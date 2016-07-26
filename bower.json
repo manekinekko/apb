@@ -20,6 +20,9 @@
     "html5-boilerplate": "^5.3.0",
     "bootstrap": "v4.0.0-alpha.2",
     "paper-tabs": "PolymerElements/paper-tabs#^1.6.2",
-    "iron-pages": "PolymerElements/iron-pages#^1.0.8"
+    "iron-pages": "PolymerElements/iron-pages#^1.0.8",
+    "ng-polymer-elements": "^0.3.0",
+    "paper-input": "PolymerElements/paper-input#^1.1.15",
+    "paper-button": "PolymerElements/paper-button#^1.0.12"
   }
 }

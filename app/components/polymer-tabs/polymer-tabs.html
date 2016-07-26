@@ -1,6 +1,8 @@
 <link rel="import" href="/bower_components/polymer/polymer.html">
 <link rel="import" href="/bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="/bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="/bower_components/paper-input/paper-input.html">
+<link rel="import" href="/bower_components/paper-button/paper-button.html">
 
 <!--
 `polymer-tabs`
@@ -10,6 +12,10 @@
 -->
 
 <dom-module id="polymer-tabs">
+
+  <!-- <script src="/bower_components/jquery/dist/jquery.js"></script>
+  <script src="/bower_components/bootstrap/dist/js/umd/tab.js"></script> -->
+
   <template>
     <style>
       :host {
@@ -18,27 +24,49 @@
     </style>
 
     <style is="custom-style">
-      paper-tabs[no-bar] paper-tab.iron-selected {
-        color: #ffff8d;
+      iron-pages div {
+        padding: 20px;
       }
     </style>
 
-    <h2>Hello [[prop1]]</h2>
-    <paper-tabs selected="{{selected}}">
-      <paper-tab>ITEM ONE</paper-tab>
-      <paper-tab>ITEM TWO</paper-tab>
-      <paper-tab>ITEM THREE</paper-tab>
+    <h2>Hello "[[message]]"</h2>
+
+    <paper-tabs id="tabs" noink selected="{{selected}}" class="nav nav-tabs" role="tablist" on-selected-item-changed="itemChanged">
+      <paper-tab role="presentation" class="active">
+
+        <!-- <a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a> -->
+        Home
+
+      </paper-tab>
+      <paper-tab role="presentation">
+
+        <!-- <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a> -->
+        Profile
+
+      </paper-tab>
+      <paper-tab role="presentation">
+
+        <!-- <a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a> -->
+        Settings
+
+      </paper-tab>
     </paper-tabs>
 
-    <iron-pages selected="{{selected}}">
-      <div>
-        <content select=".tab-1"></content>
+    <iron-pages selected="{{selected}}" class="tab-content">
+      <div role="tabpanel" class$="tab-pane" id="home">
+        <content id="_1" select=".tab-1"></content>
       </div>
-      <div>
-        <content select=".tab-2"></content>
+      <div role="tabpanel" class$="tab-pane" id="profile">
+        <content id="_2" select=".tab-2"></content>
       </div>
-      <div>
-        <content select=".tab-3"></content>
+      <div role="tabpanel" class$="tab-pane" id="settings">
+
+        <p>polymer events & bindings</p>
+
+        <span>{{ name }}</span>
+        <paper-input label="Input label" value="{{name}}"></paper-input>
+        <paper-button raised on-tap="btn3">Click me</paper-button>
+
       </div>
     </iron-pages>
 
@@ -50,14 +78,57 @@
       is: 'polymer-tabs',
 
       properties: {
-        prop1: {
-          type: String,
-          value: 'polymer-tabs',
+        message: {
+          type: String
         }
       },
 
+      btn3: function(event) {
+        console.log(event);
+        alert('clicked from polymer');
+      },
+
+      itemChanged: function(event) {
+        // raise this event to the outside world (angular)
+        this.fire('x-on-selected-item-changed', {
+          value: this.$.tabs.selected
+        });
+      },
+
       ready: function() {
-        this.selected = 1;
+
+        this.selected = 0;
+
+        // uncomment the section below when bootstrap 4 tabs.js plugin is working properly!
+        // $(Polymer.dom(this.$.tabs).querySelectorAll('a')).click( (e) => {
+        //   e.preventDefault();
+        //   $(this).tab('show');
+        // });
+
+        // =====
+
+        // trying to recompile angular template from inside polymer.
+        // HACKY WAY
+        // REALLY?? DON'T DO THAT!
+
+        // let $body = angular.element(document.body);
+        // let $rootScope = $body.scope().$root;
+        //
+        // let block = this.$._1._distributedNodes.pop();
+        // let el = angular.element(block);
+        // let injector = el.injector();
+        // let $compile = injector.get('$compile');
+        // let controller = injector.get('$controller')('View1Ctrl', {
+        //   $scope: el.scope()
+        // });
+        // let celem = $compile(block.innerHTML)(el.scope(), undefined, {
+        //   transcludeControllers: {
+        //     'View1Ctrl' : {
+        //       instance: controller
+        //     }
+        //   }
+        // });
+        // $rootScope.$digest();
       }
 
     });
