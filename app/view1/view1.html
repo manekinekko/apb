@@ -1,33 +1,69 @@
 
 <p>
-  Selected tab: {{ ctrl1.selectedIndex }}
+  Selected polymer tab (event on-selected-item-changed fired by polymer): {{ $ctrl.selectedIndex || '(no tab selected)' }}
 </p>
 
-<polymer-tabs message="{{ ctrl1.message }}" bind-polymer-event>
+<polymer-tabs
+  message="$ctrl.message"
+
+  uncommit-on-selected-item-changed="$ctrl.OnSelectedItemChanged($event)"
+  uncommit-ce-one-way
+
+  bind-polymer-event
+>
 
   <!-- content projected in polymer element -->
   <div class="tab-1">
 
-    <p>angular events</p>
+    <p>1) this whole content tab is {{'transcluded*' | uppercase}} from angular into this polymer element</p>
+    <span>* <i>uppercased using angular filter</i></span>
 
-    <button type="button" name="button" ng-click="ctrl1.btn1($event)">
+    <hr>
 
-      Click {{ 'me' | uppercase }}
+    <p>2) testing angular events fired from within polymer element</p>
 
+    <button type="button" name="button" ng-click="$ctrl.btn1($event)" class="btn btn-default">
+      Click {{ 'me' }}
     </button>
+
+    <hr>
+
+    <p>
+      3) angular 1-way binding with ng-model from polymer →
+      <b>{{</b><span> {{ $ctrl.model.name }} </span><b>}}</b>
+      <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">@</span>
+        <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1" name="name" ng-model="$ctrl.model.name">
+      </div>
+    </p>
+
+
+    <p>
+      4) angular 2-way binding with ng-model from polymer (see message above ↑)
+      <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">@</span>
+        <input type="text" class="form-control" name="name" ng-model="$ctrl.message">
+      </div>
+    </p>
+
+    <hr>
+
+    <p>
+      5) testing ng-if and ng-repeat in projected content
+    </p>
+    <button type="button" ng-click="list=!list" class="btn btn-default">
+      Show/hide list
+    </button>
+    <ul ng-if="list" style="display:inline-block;margin:0;">
+      <li ng-repeat="number in [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] track by $index" style="display:inline-block;border:1px solid;padding:10px;margin:0 2px" >{{number}}</li>
+    </ul>
+
+
   </div>
 
   <!-- content projected in polymer element -->
   <div class="tab-2">
-
-    <p>angular bindings</p>
-
-    <span>{{ ctrl1.model | json }}</span>
-    <div class="input-group">
-      <span class="input-group-addon" id="basic-addon1">@</span>
-      <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1" name="name" ng-model="ctrl1.model.name">
-    </div>
-
+    TBD
   </div>
 
 </polymer-tabs>

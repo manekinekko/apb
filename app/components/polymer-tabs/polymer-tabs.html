@@ -29,44 +29,42 @@
       }
     </style>
 
-    <h2>Hello "[[message]]"</h2>
+    <h2>Polymer: Hello "[[message]]"</h2>
 
-    <paper-tabs id="tabs" noink selected="{{selected}}" class="nav nav-tabs" role="tablist" on-selected-item-changed="itemChanged">
+    <paper-tabs id="tabs" selected="{{selected}}" class="nav nav-tabs" role="tablist" on-selected-item-changed="itemChanged">
       <paper-tab role="presentation" class="active">
 
-        <!-- <a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a> -->
-        Home
+        <!-- <a href="#angular" aria-controls="angular" role="tab" data-toggle="tab">Home</a> -->
+        Angular 1.x
 
       </paper-tab>
       <paper-tab role="presentation">
 
-        <!-- <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a> -->
-        Profile
+        <!-- <a href="#polymer" aria-controls="polymer" role="tab" data-toggle="tab">Profile</a> -->
+        Polymer
 
       </paper-tab>
       <paper-tab role="presentation">
 
-        <!-- <a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a> -->
-        Settings
+        <!-- <a href="#polymerception" aria-controls="polymerception" role="tab" data-toggle="tab">Settings</a> -->
+        Polymer → Angular → Polymer → Angular
 
       </paper-tab>
     </paper-tabs>
 
     <iron-pages selected="{{selected}}" class="tab-content">
-      <div role="tabpanel" class$="tab-pane" id="home">
+      <div role="tabpanel" class$="tab-pane" id="angular">
         <content id="_1" select=".tab-1"></content>
       </div>
-      <div role="tabpanel" class$="tab-pane" id="profile">
-        <content id="_2" select=".tab-2"></content>
-      </div>
-      <div role="tabpanel" class$="tab-pane" id="settings">
-
-        <p>polymer events & bindings</p>
+      <div role="tabpanel" class$="tab-pane" id="polymer">
+        <p>local polymer event & prop binding</p>
 
         <span>{{ name }}</span>
         <paper-input label="Input label" value="{{name}}"></paper-input>
         <paper-button raised on-tap="btn3">Click me</paper-button>
-
+      </div>
+      <div role="tabpanel" class$="tab-pane" id="polymerception">
+        <content id="_2" select=".tab-2"></content>
       </div>
     </iron-pages>
 
@@ -90,9 +88,7 @@
 
       itemChanged: function(event) {
         // raise this event to the outside world (angular)
-        this.fire('x-on-selected-item-changed', {
-          value: this.$.tabs.selected
-        });
+        this.fire('selected-item-changed', this.$.tabs.selected);
       },
 
       ready: function() {
